@@ -60,6 +60,43 @@ body {
   width: 100%;
 }
 
+/* Área de drop vacía */
+.empty-drop-area {
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 8px;
+}
+
+.empty-drop-area:hover {
+  background: rgba(56, 189, 248, 0.06);
+}
+
+.empty-drop-area i {
+  font-size: 4rem;
+  padding: 1.2rem;
+  border-radius: 50%;
+  background: var(--surface-b);
+  color: #38bdf8;
+  transition: background 0.2s;
+}
+
+.empty-drop-area:hover i {
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.empty-drop-area span {
+  font-size: 1.1rem;
+  color: var(--text-color-secondary);
+}
+
+/* Galería */
 .gallery-item {
   width: calc(33.33% - 1.5rem);
   min-width: 180px;
@@ -102,6 +139,20 @@ body {
   margin-top: 0.25rem;
 }
 
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-buttons .p-button {
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  border-radius: 10px;
+}
+
+/* Toggle tema */
 .theme-toggle {
   position: fixed;
   top: 1.25rem;
@@ -122,16 +173,3 @@ body {
 
 .theme-toggle:hover { border-color: #38bdf8; }
 .theme-toggle i { font-size: 1rem; color: #64748b; }
-
-
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-}
-
-.action-buttons .p-button {
-  padding: 0.75rem 2.5rem;
-  font-size: 1rem;
-  font-family: 'Nunito', sans-serif;
-  border-radius: 10px;
-}

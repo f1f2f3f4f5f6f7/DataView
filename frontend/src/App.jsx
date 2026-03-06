@@ -20,6 +20,11 @@ export default function App() {
     setDarkMode(!darkMode)
   }
 
+  const triggerFileSelect = () => {
+    const inputs = document.querySelectorAll('input[type="file"]')
+    if (inputs.length > 0) inputs[0].click()
+  }
+
   const onTemplateSelect = (e) => {
     let _totalSize = totalSize
     Object.keys(e.files).forEach((key) => { _totalSize += e.files[key].size || 0 })
@@ -41,26 +46,28 @@ export default function App() {
   const onTemplateClear = () => setTotalSize(0)
 
   const headerTemplate = (options) => {
-    const { className, chooseButton, cancelButton } = options
-    const value = totalSize / 10000
-    const formatedValue = fileUploadRef && fileUploadRef.current
-      ? fileUploadRef.current.formatSize(totalSize)
-      : '0 B'
-    const isNearLimit = value >= 80
+  const { className, chooseButton, cancelButton } = options
+  const value = totalSize / 10000
+  const formatedValue = fileUploadRef && fileUploadRef.current
+    ? fileUploadRef.current.formatSize(totalSize)
+    : '0 B'
+  const isNearLimit = value >= 80
 
-    return (
-      <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
+  return (
+    <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center', minHeight: '58px' }}>
+      <div style={{ opacity: totalSize > 0 ? 1 : 0, pointerEvents: totalSize > 0 ? 'auto' : 'none', width: '42px' }}>
         {chooseButton}
-        {cancelButton}
-        <div className="flex align-items-center gap-3 ml-auto">
-          <span style={{ color: isNearLimit ? '#ef4444' : 'inherit' }}>{formatedValue} / 500 MB</span>
-          <ProgressBar value={value} showValue={false}
-            style={{ width: '10rem', height: '12px' }}
-            color={isNearLimit ? '#ef4444' : '#38bdf8'} />
-        </div>
       </div>
-    )
-  }
+      {cancelButton}
+      <div className="flex align-items-center gap-3 ml-auto">
+        <span style={{ color: isNearLimit ? '#ef4444' : 'inherit' }}>{formatedValue} / 500 MB</span>
+        <ProgressBar value={value} showValue={false}
+          style={{ width: '10rem', height: '12px' }}
+          color={isNearLimit ? '#ef4444' : '#38bdf8'} />
+      </div>
+    </div>
+  )
+}
 
   const itemTemplate = (file, props) => (
     <div className="gallery-item">
@@ -79,68 +86,65 @@ export default function App() {
   )
 
   const emptyTemplate = () => (
-    <div className="flex align-items-center flex-column"
-      style={{ width: '100%', height: '100%', minHeight: '400px', justifyContent: 'center' }}>
-      <i className="pi pi-image mt-3 p-5"
-        style={{ fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }} />
-      <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">
-        Drag and Drop Image Here
-      </span>
+    <div className="empty-drop-area" onClick={triggerFileSelect}>
+      <i className="pi pi-image" />
+      <span>Arrastra tus archivos aquí o haz clic para seleccionar</span>
     </div>
   )
 
-  const chooseOptions = { icon: 'pi pi-fw pi-images',  iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' }
+  const chooseOptions = {
+    icon: 'pi pi-fw pi-images',
+    iconOnly: true,
+    className: 'custom-choose-btn p-button-rounded p-button-outlined',
+  }
   const uploadOptions = { style: { display: 'none' } }
   const cancelOptions = { style: { display: 'none' } }
 
   return (
-  <div className="page">
-    <Toast ref={toast} />
-    <Tooltip target=".custom-choose-btn" content="Choose" position="bottom" />
-    
+    <div className="page">
+      <Toast ref={toast} />
+      <Tooltip target=".custom-choose-btn" content="Agregar más" position="bottom" />
 
-    <button className="theme-toggle" onClick={toggleTheme}>
-      <i className={`pi ${darkMode ? 'pi-sun' : 'pi-moon'}`} />
-    </button>
+      <button className="theme-toggle" onClick={toggleTheme}>
+        <i className={`pi ${darkMode ? 'pi-sun' : 'pi-moon'}`} />
+      </button>
 
-    <h1 className="title">DataView</h1>
+      <h1 className="title">DataView</h1>
 
-    <div className="upload-wrapper">
-      <FileUpload
-        ref={fileUploadRef}
-        name="demo[]"
-        url="/api/upload"
-        multiple
-        accept="image/*"
-        maxFileSize={500000000}
-        onUpload={onTemplateUpload}
-        onSelect={onTemplateSelect}
-        onError={onTemplateClear}
-        onClear={onTemplateClear}
-        headerTemplate={headerTemplate}
-        itemTemplate={itemTemplate}
-        emptyTemplate={emptyTemplate}
-        chooseOptions={chooseOptions}
-        uploadOptions={uploadOptions}
-        cancelOptions={cancelOptions}
-      />
+      <div className="upload-wrapper">
+        <FileUpload
+          ref={fileUploadRef}
+          name="demo[]"
+          url="/api/upload"
+          multiple
+          accept="image/*"
+          maxFileSize={500000000}
+          onUpload={onTemplateUpload}
+          onSelect={onTemplateSelect}
+          onError={onTemplateClear}
+          onClear={onTemplateClear}
+          headerTemplate={headerTemplate}
+          itemTemplate={itemTemplate}
+          emptyTemplate={emptyTemplate}
+          chooseOptions={chooseOptions}
+          uploadOptions={uploadOptions}
+          cancelOptions={cancelOptions}
+        />
+      </div>
+
+      <div className="action-buttons">
+        <Button
+          label="Cargar"
+          onClick={() => fileUploadRef.current.upload()}
+          disabled={totalSize === 0}
+        />
+        <Button
+          label="Limpiar"
+          className="p-button-outlined p-button-secondary"
+          onClick={() => fileUploadRef.current.clear()}
+          disabled={totalSize === 0}
+        />
+      </div>
     </div>
-
-    <div className="action-buttons">
-      <Button
-        label="Cargar"
-        icon="pi pi-cloud-upload"
-        onClick={() => fileUploadRef.current.upload()}
-        disabled={totalSize === 0}
-      />
-      <Button
-        label="Limpiar"
-        icon="pi pi-times"
-        className="p-button-outlined p-button-secondary"
-        onClick={() => fileUploadRef.current.clear()}
-        disabled={totalSize === 0}
-      />
-    </div>
-  </div>
-)
+  )
 }
