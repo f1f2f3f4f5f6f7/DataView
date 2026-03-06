@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pyexiftool
+pandas
+reportlab
+pillow
+python-multipart
