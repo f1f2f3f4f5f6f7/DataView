@@ -4,6 +4,7 @@ from PIL import Image, ImageDraw
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 from reportlab.lib import colors
+from app.services.exif_service import write_metadata
 
 
 def export_csv(metadata: list[dict], output_path: str) -> str:
@@ -49,3 +50,8 @@ def export_jpg(metadata: list[dict], output_path: str) -> str:
 
     image.save(output_path)
     return output_path
+
+
+def export_image_with_metadata(src_path: str, metadata_items: list[dict], dest_path: str) -> str:
+    """ Exporta la imagen original con los metadatos """
+    return write_metadata(src_path, metadata_items, dest_path)

@@ -104,10 +104,7 @@ def extract_metadata(file_path: str) -> list[dict]:
 
 
 def write_metadata(src_path: str, metadata_items: list[dict], dest_path: str) -> str:
-    """
-    Copia src_path → dest_path y escribe los metadatos editables con ExifTool.
-    Devuelve dest_path.
-    """
+
     shutil.copy2(src_path, dest_path)
 
     tags_to_write = {
