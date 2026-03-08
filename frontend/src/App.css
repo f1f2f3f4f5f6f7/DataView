@@ -173,3 +173,65 @@ body {
 
 .theme-toggle:hover { border-color: #38bdf8; }
 .theme-toggle i { font-size: 1rem; color: #64748b; }
+
+/* Sección variables: tabla nombre variable | variable + editar/eliminar */
+.variables-section {
+  width: 75%;
+  max-width: 1100px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(56, 189, 248, 0.08);
+  overflow: hidden;
+  padding: 1.25rem 1.5rem;
+}
+
+.variables-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #334155;
+  margin-bottom: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.variables-table-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e9f3fd;
+}
+
+.variables-datatable .p-datatable-thead > tr > th {
+  background: #f8fbff;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.875rem 1rem;
+  border-color: #e9f3fd;
+}
+
+.variables-datatable .p-datatable-tbody > tr > td {
+  padding: 0.75rem 1rem;
+  color: #334155;
+  border-color: #e9f3fd;
+}
+
+.variables-datatable .p-datatable-tbody > tr:hover {
+  background: rgba(56, 189, 248, 0.04);
+}
+
+.variable-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.variable-actions .p-button {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+}
+
+.variable-edit-input {
+  width: 100%;
+  max-width: 280px;
+}
