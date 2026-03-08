@@ -114,7 +114,7 @@ export default function App() {
       <div className="upload-wrapper">
         <FileUpload
           ref={fileUploadRef}
-          name="demo[]"
+          name="file"
           url="/api/upload"
           multiple
           accept="image/*"
